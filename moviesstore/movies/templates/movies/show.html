@@ -73,12 +73,27 @@
             >
               Delete
             </a>
-            {% endif %}
+          {% endif %}
 
-          </li>
-          {% endfor %}
+        {% if user.is_authenticated and user != review.user %}
+        <form
+          method = "POST"
+          action="{% url 'movies.report_review' id=template_data.movie.id review_id=review.id %}"
+          class = "d-inline"
+        >
+          {% csrf_token %}
+
+          <button
+            type="submit"
+            class="btn btn-warning"
+            >
+            Report
+          </button>
+        </form>
+        {% endif %}
+    </li>
+    {% endfor %}
         </ul>
-
         {% if user.is_authenticated %}
         <div class="container mt-4">
           <div class="row justify-content-center">
